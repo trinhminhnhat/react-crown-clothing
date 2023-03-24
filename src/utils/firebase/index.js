@@ -15,15 +15,16 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt: 'select_account',
 });
 
 const auth = getAuth();
 
-const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 const db = getFirestore();
 
@@ -49,4 +50,4 @@ const createUserDocumentFromAuth = async (userAuth) => {
     return userDocRef;
 };
 
-export { auth, signInWithGooglePopup, db, createUserDocumentFromAuth };
+export { auth, signInWithGooglePopup, signInWithGoogleRedirect, db, createUserDocumentFromAuth };
