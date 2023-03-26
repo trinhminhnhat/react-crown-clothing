@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
+import Button from 'components/Button';
+import FormInput from 'components/FormInput';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from 'utils/firebase';
+import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
     displayName: '',
@@ -50,11 +53,12 @@ const SignUpForm = () => {
     };
 
     return (
-        <div>
-            <h1>Sign up with your email and password</h1>
+        <div className="sign-up-container">
+            <h2>Don't have an account </h2>
+            <span>Sign up with your email and password</span>
             <form action="#" onSubmit={handleSubmit}>
-                <label htmlFor="displayName">Display name</label>
-                <input
+                <FormInput
+                    label="Display name"
                     type="text"
                     required
                     id="displayName"
@@ -63,11 +67,18 @@ const SignUpForm = () => {
                     value={displayName}
                 />
 
-                <label htmlFor="email">Email</label>
-                <input type="email" required id="email" name="email" onChange={handleChange} value={email} />
+                <FormInput
+                    label="Email"
+                    type="email"
+                    required
+                    id="email"
+                    name="email"
+                    onChange={handleChange}
+                    value={email}
+                />
 
-                <label htmlFor="password">Password</label>
-                <input
+                <FormInput
+                    label="Password"
                     type="password"
                     required
                     id="password"
@@ -77,8 +88,8 @@ const SignUpForm = () => {
                     value={password}
                 />
 
-                <label htmlFor="confirmPassword">Confirm password</label>
-                <input
+                <FormInput
+                    label="Confirm password"
                     type="password"
                     required
                     id="confirmPassword"
@@ -87,7 +98,7 @@ const SignUpForm = () => {
                     value={confirmPassword}
                 />
 
-                <button type="submit">Sign up</button>
+                <Button type="submit">Sign up</Button>
             </form>
         </div>
     );
