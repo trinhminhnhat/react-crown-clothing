@@ -1,14 +1,15 @@
 import { initializeApp } from 'firebase/app';
 import {
-    getAuth,
-    signInWithRedirect,
-    signInWithPopup,
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    getAuth,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signInWithRedirect,
+    signOut,
 } from 'firebase/auth';
 
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -72,6 +73,8 @@ const signInAuthUserWithEmailAndPassword = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password);
 };
 
+const signOutUser = async () => await signOut(auth);
+
 export {
     auth,
     signInWithGooglePopup,
@@ -80,4 +83,6 @@ export {
     createUserDocumentFromAuth,
     createAuthUserWithEmailAndPassword,
     signInAuthUserWithEmailAndPassword,
+    signOutUser,
 };
+
