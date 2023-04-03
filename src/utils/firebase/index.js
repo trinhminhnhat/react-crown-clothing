@@ -10,7 +10,7 @@ import {
     onAuthStateChanged,
 } from 'firebase/auth';
 
-import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, setDoc, collection, writeBatch } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -36,6 +36,22 @@ const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 const db = getFirestore();
+
+const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+
+        batch.set(docRef, object);
+    });
+
+    // commit transaction
+    await batch.commit();
+    console.log('addCollectionAndDocuments done');
+};
 
 const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     if (!userAuth) return;
@@ -88,4 +104,5 @@ export {
     signInAuthUserWithEmailAndPassword,
     signOutUser,
     onAuthStateChangeListener,
+    addCollectionAndDocuments,
 };
