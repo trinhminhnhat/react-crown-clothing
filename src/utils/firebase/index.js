@@ -10,7 +10,7 @@ import {
     onAuthStateChanged,
 } from 'firebase/auth';
 
-import { doc, getDoc, getFirestore, setDoc, collection, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -51,6 +51,22 @@ const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
     // commit transaction
     await batch.commit();
     console.log('addCollectionAndDocuments done');
+};
+
+const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+
+        return acc;
+    }, {});
+
+    return categoryMap;
 };
 
 const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
@@ -105,4 +121,5 @@ export {
     signOutUser,
     onAuthStateChangeListener,
     addCollectionAndDocuments,
+    getCategoriesAndDocuments,
 };
