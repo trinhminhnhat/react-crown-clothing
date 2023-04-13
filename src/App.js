@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import Authentication from 'routes/Authentication';
@@ -5,8 +7,26 @@ import Checkout from 'routes/Checkout';
 import Home from 'routes/Home';
 import Navigation from 'routes/Navigation';
 import Shop from 'routes/Shop';
+import { setCurrentUser } from 'store/user/user.action';
+import { createUserDocumentFromAuth, onAuthStateChangeListener } from 'utils/firebase';
 
 const App = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChangeListener((user) => {
+            if (user) {
+                createUserDocumentFromAuth(user);
+            }
+
+            dispatch(setCurrentUser(user));
+        });
+
+        return () => unsubscribe;
+
+        // dispatch will never change, not necessary to add dispatch in dependency
+    }, []);
+
     return (
         <Routes>
             <Route path="/" element={<Navigation />}>
