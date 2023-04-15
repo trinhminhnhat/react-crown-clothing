@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import CategoriesPreview from 'routes/CategoriesPreview';
 import Category from 'routes/Category';
-import { setCategoriesMap } from 'store/categories/categories.action';
+import { setCategories } from 'store/categories/categories.action';
 import { getCategoriesAndDocuments } from 'utils/firebase';
 
 const Shop = () => {
@@ -13,10 +13,11 @@ const Shop = () => {
     useEffect(() => {
         const getCategoriesMap = async () => {
             const categoriesMap = await getCategoriesAndDocuments();
-            dispatch(setCategoriesMap(categoriesMap));
+            dispatch(setCategories(categoriesMap));
         };
 
         getCategoriesMap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

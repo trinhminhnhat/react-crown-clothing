@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
+// import SHOP_DATA from 'mock-data/shop-data';
 import Authentication from 'routes/Authentication';
 import Checkout from 'routes/Checkout';
 import Home from 'routes/Home';
@@ -9,6 +10,7 @@ import Navigation from 'routes/Navigation';
 import Shop from 'routes/Shop';
 import { setCurrentUser } from 'store/user/user.action';
 import { createUserDocumentFromAuth, onAuthStateChangeListener } from 'utils/firebase';
+// import { addCollectionAndDocuments } from 'utils/firebase';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -22,9 +24,13 @@ const App = () => {
             dispatch(setCurrentUser(user));
         });
 
+        // run the first time to create collection
+        // addCollectionAndDocuments('categories', SHOP_DATA);
+
         return () => unsubscribe;
 
-        // dispatch will never change, not necessary to add dispatch in dependency
+    // dispatch will never change, not necessary to add dispatch in dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

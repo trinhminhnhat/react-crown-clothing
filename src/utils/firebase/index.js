@@ -3,14 +3,14 @@ import {
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
     getAuth,
+    onAuthStateChanged,
     signInWithEmailAndPassword,
     signInWithPopup,
     signInWithRedirect,
     signOut,
-    onAuthStateChanged,
 } from 'firebase/auth';
 
-import { doc, getDoc, getFirestore, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, writeBatch } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -60,14 +60,7 @@ const getCategoriesAndDocuments = async () => {
 
     const querySnapshot = await getDocs(q);
 
-    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-        const { title, items } = docSnapshot.data();
-        acc[title.toLowerCase()] = items;
-
-        return acc;
-    }, {});
-
-    return categoryMap;
+    return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
 const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
@@ -124,3 +117,6 @@ export {
     addCollectionAndDocuments,
     getCategoriesAndDocuments,
 };
+
+
+
