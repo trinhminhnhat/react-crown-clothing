@@ -4,13 +4,13 @@ import { Route, Routes } from 'react-router-dom';
 
 import CategoriesPreview from 'routes/CategoriesPreview';
 import Category from 'routes/Category';
-import { fetchCategoriesAsync } from 'store/categories/categories.action';
+import { fetchCategoriesStart } from 'store/categories/categories.action';
 
 const Shop = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchCategoriesAsync());
+        dispatch(fetchCategoriesStart());
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
