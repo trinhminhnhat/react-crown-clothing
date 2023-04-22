@@ -85,7 +85,7 @@ const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) 
         }
     }
 
-    return userDocRef;
+    return userSnapshot;
 };
 
 const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -104,19 +104,22 @@ const signOutUser = async () => await signOut(auth);
 
 const onAuthStateChangeListener = (callback) => onAuthStateChanged(auth, callback);
 
-export {
-    auth,
-    signInWithGooglePopup,
-    signInWithGoogleRedirect,
-    db,
-    createUserDocumentFromAuth,
-    createAuthUserWithEmailAndPassword,
-    signInAuthUserWithEmailAndPassword,
-    signOutUser,
-    onAuthStateChangeListener,
-    addCollectionAndDocuments,
-    getCategoriesAndDocuments,
+const getCurrentUser = async () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubscribe();
+                resolve(userAuth);
+            },
+            reject,
+        );
+    });
 };
 
-
+export {
+    addCollectionAndDocuments, auth, createAuthUserWithEmailAndPassword, createUserDocumentFromAuth, db, getCategoriesAndDocuments,
+    getCurrentUser, onAuthStateChangeListener, signInAuthUserWithEmailAndPassword, signInWithGooglePopup,
+    signInWithGoogleRedirect, signOutUser
+};
 

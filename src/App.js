@@ -8,29 +8,15 @@ import Checkout from 'routes/Checkout';
 import Home from 'routes/Home';
 import Navigation from 'routes/Navigation';
 import Shop from 'routes/Shop';
-import { setCurrentUser } from 'store/user/user.action';
-import { createUserDocumentFromAuth, onAuthStateChangeListener } from 'utils/firebase';
+import { checkUserSession } from 'store/user/user.action';
 // import { addCollectionAndDocuments } from 'utils/firebase';
 
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChangeListener((user) => {
-            if (user) {
-                createUserDocumentFromAuth(user);
-            }
-
-            dispatch(setCurrentUser(user));
-        });
-
-        // run the first time to create collection
-        // addCollectionAndDocuments('categories', SHOP_DATA);
-
-        return () => unsubscribe;
-
-    // dispatch will never change, not necessary to add dispatch in dependency
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        dispatch(checkUserSession());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
