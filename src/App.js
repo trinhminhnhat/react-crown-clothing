@@ -8,7 +8,7 @@ import Checkout from 'routes/Checkout';
 import Home from 'routes/Home';
 import Navigation from 'routes/Navigation';
 import Shop from 'routes/Shop';
-import { setCurrentUser } from 'store/user/user.action';
+import { setCurrentUser } from 'store/user/user.slice';
 import { createUserDocumentFromAuth, onAuthStateChangeListener } from 'utils/firebase';
 // import { addCollectionAndDocuments } from 'utils/firebase';
 
@@ -21,7 +21,9 @@ const App = () => {
                 createUserDocumentFromAuth(user);
             }
 
-            dispatch(setCurrentUser(user));
+            const pickedUser = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+
+            dispatch(setCurrentUser(pickedUser));
         });
 
         // run the first time to create collection
@@ -29,8 +31,8 @@ const App = () => {
 
         return () => unsubscribe;
 
-    // dispatch will never change, not necessary to add dispatch in dependency
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // dispatch will never change, not necessary to add dispatch in dependency
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

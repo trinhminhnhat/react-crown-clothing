@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import CategoriesPreview from 'routes/CategoriesPreview';
 import Category from 'routes/Category';
-import { setCategories } from 'store/categories/categories.action';
+import { setCategories } from 'store/categories/categories.slice';
 import { getCategoriesAndDocuments } from 'utils/firebase';
 
 const Shop = () => {
