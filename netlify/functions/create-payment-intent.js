@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 exports.handler = async (event) => {
     try {
         const { amount } = JSON.parse(event.body);
-        const paymentIntent = await stripe.paymentIntent.createPaymentIntent({
+        const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency: 'usd',
             payment_method_types: ['card'],
