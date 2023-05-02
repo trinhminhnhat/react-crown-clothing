@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 import { ReactComponent as CrownLogo } from 'assets/img/crown.svg';
 import CartDropdown from 'components/CartDropdown';
 import CartIcon from 'components/CartIcon';
-import { selectIsCartOpen } from 'store/cart/cart.selector.js';
-import { signOutStart } from 'store/user/user.action.js';
-import { selectCurrentUser } from 'store/user/user.selector.js';
+import { selectIsCartOpen } from 'store/cart/cart.selector';
+import { signOutStart } from 'store/user/user.action';
+import { selectCurrentUser } from 'store/user/user.selector';
 import './navigation.styles.jsx';
 import { LogoContainer, NavLink, NavLinks, NavigationContainer } from './navigation.styles.jsx';
 
