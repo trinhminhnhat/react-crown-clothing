@@ -1,5 +1,5 @@
-import { getRedirectResult } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { AuthError, AuthErrorCodes, getRedirectResult } from 'firebase/auth';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Button, { BUTTON_TYPE_CLASSES } from 'components/Button';
@@ -37,7 +37,7 @@ const SignInForm = () => {
         dispatch(googleSignInStart());
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         setFormFields((pre) => ({
@@ -46,7 +46,7 @@ const SignInForm = () => {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
@@ -54,11 +54,11 @@ const SignInForm = () => {
 
             resetFormFields();
         } catch (error) {
-            switch (error.code) {
-                case 'auth/user-not-found':
+            switch ((error as AuthError).code) {
+                case AuthErrorCodes.USER_DELETED:
                     alert('No user associated with this email');
                     break;
-                case 'auth/wrong-password':
+                case AuthErrorCodes.INVALID_PASSWORD:
                     alert('Incorrect password for email');
                     break;
                 default:

@@ -7,8 +7,8 @@ import CartIcon from 'components/CartIcon';
 import { selectIsCartOpen } from 'store/cart/cart.selector';
 import { signOutStart } from 'store/user/user.action';
 import { selectCurrentUser } from 'store/user/user.selector';
-import './navigation.styles.jsx';
-import { LogoContainer, NavLink, NavLinks, NavigationContainer } from './navigation.styles.jsx';
+import './navigation.styles';
+import { LogoContainer, NavLink, NavLinks, NavigationContainer } from './navigation.styles';
 
 const Navigation = () => {
     const dispatch = useDispatch();
