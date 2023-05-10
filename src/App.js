@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 // import SHOP_DATA from 'mock-data/shop-data';
 import Spinner from 'components/Spinner/Spinner';
 import { checkUserSession } from 'store/user/user.action';
+import { GlobalStyle } from './global.styles';
 // import { addCollectionAndDocuments } from 'utils/firebase';
 
 const Home = lazy(() => import('routes/Home'));
@@ -23,6 +24,7 @@ const App = () => {
 
     return (
         <Suspense fallback={<Spinner />}>
+            <GlobalStyle />
             <Routes>
                 <Route path="/" element={<Navigation />}>
                     <Route index element={<Home />} />

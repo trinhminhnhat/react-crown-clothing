@@ -9,7 +9,6 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { persistor, store } from 'store/store';
 import { stripePromise } from 'utils/stripe';
 import App from './App';
-import './index.scss';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
